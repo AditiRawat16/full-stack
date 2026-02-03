@@ -1,1 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SVG Drawing Tool</title>
+<style>
+  body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 30px; }
+  svg { width: 80vw; height: 50vh; border: 2px solid #ccc; cursor: crosshair; }
+  button, input { margin: 5px; padding: 5px 10px; }
+</style>
+</head>
+<body>
+
+<h2>SVG Drawing Tool</h2>
+
+<svg id="canvas"></svg>
+
+<div>
+  <button onclick="undo()">Undo</button>
+  <label>Color: <input type="color" id="color" value="#2f7df6"></label>
+</div>
+
+<p>Circles drawn: <span id="count">0</span></p>
+
+<script>
+const canvas = document.getElementById('canvas');
+const count = document.getElementById('count');
+const colorInput = document.getElementById('color');
+let circles = [];
+let drawing = false;
+
+// Draw circle at mouse position using offsetX/Y
+function drawCircle(e) {
+    const c = document.createElementNS("http://www.w3.org/2000/svg","circle");
+    c.setAttribute("cx", e.offsetX);
+    c.setAttribute("cy", e.offsetY);
+    c.setAttribute("r", 8);
+    c.setAttribute("fill", colorInput.value);
+
+    canvas.appendChild(c);
+    circles.push(c);
+    count.textContent = circles.length;
+}
+
+// Mouse events
+canvas.onmousedown = (e) => { drawing = true; drawCircle(e); };
+canvas.onmousemove = (e) => { if(drawing) drawCircle(e); };
+canvas.onmouseup = () => { drawing = false; };
+
+// Undo last circle
+function undo() {
+    if(circles.length) {
+        canvas.removeChild(circles.pop());
+        count.textContent = circles.length;
+    }
+}
+</script>
+
+</body>
+</html>
 
