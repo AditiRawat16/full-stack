@@ -1,0 +1,172 @@
+// index.js
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import "./index.css";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+// App.js
+import React from "react";
+import ProductCard from "./ProductCard";
+
+function App() {
+  return (
+    <div className="app">
+      <h1 className="title">Product Store</h1>
+
+      <div className="products">
+        <ProductCard
+          name="Wireless Headphones"
+          price={1999}
+          image="https://via.placeholder.com/300"
+          inStock={true}
+        />
+
+        <ProductCard
+          name="Smart Watch"
+          price={3499}
+          image="https://via.placeholder.com/300"
+          inStock={false}
+        />
+
+        <ProductCard
+          name="Bluetooth Speaker"
+          price={1499}
+          image="https://via.placeholder.com/300"
+          inStock={true}
+        />
+      </div>
+    </div>
+  );
+}
+
+export default App;
+
+// ProductCard.js
+import React from "react";
+import "./ProductCard.css";
+
+function ProductCard(props) {
+  return (
+    <div className="card">
+      <img 
+        src={props.image} 
+        alt={props.name} 
+        className="product-image" 
+      />
+
+      <h2 className="product-name">{props.name}</h2>
+
+      <p className="product-price">₹{props.price}</p>
+
+      {props.inStock ? (
+        <p className="stock available">In Stock</p>
+      ) : (
+        <p className="stock unavailable">Out of Stock</p>
+      )}
+
+      <button 
+        className="btn"
+        disabled={!props.inStock}
+      >
+        {props.inStock ? "Buy Now" : "Unavailable"}
+      </button>
+    </div>
+  );
+}
+
+export default ProductCard;
+
+// ProductCard.css
+.card {
+  width: 260px;
+  padding: 15px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.product-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.product-name {
+  margin: 10px 0;
+  font-size: 18px;
+}
+
+.product-price {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.stock {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.available {
+  color: green;
+}
+
+.unavailable {
+  color: red;
+}
+
+.btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover:enabled {
+  background-color: #0056b3;
+}
+
+.btn:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
+// index.css
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f4f4f4;
+}
+
+.app {
+  text-align: center;
+  padding: 20px;
+}
+
+.title {
+  margin-bottom: 30px;
+}
+
+.products {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
